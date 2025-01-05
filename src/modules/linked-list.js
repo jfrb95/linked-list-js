@@ -138,7 +138,7 @@ export function LinkedList() {
         },
         insertAt(value, index) {
             if (index > size) {
-                throw new Error('Index is larger than array size');
+                throw new Error('Index is larger than list size');
             }
             
             if (!head) {
@@ -169,22 +169,26 @@ export function LinkedList() {
             size += 1;
         },
         removeAt(index) {
+            if (index > size - 1) {
+                throw new Error("Index is larger than list size")
+            }
+            if (!head) {
+                return;
+            }
+            if (index === 0) {
+                head = head.next;
+                size -= 1;
+                return;
+            }
 
+            let previousNode = head;
+            while (index > 1) {
+                previousNode = previousNode.next;
+                index -= 1;
+            }
+            const deleteThisNode = previousNode.next;
+            previousNode.next = previousNode.next.next;
+            size -= 1;
         }
     }
-
 }
-
-const list = LinkedList();
-list.insertAt(7, 2);
-/*
-list.prepend(6);
-
-list.append('nice');
-
-list.prepend('ok');
-
-list.insertAt(7, 1);
-
-log(list.toString());
-*/
