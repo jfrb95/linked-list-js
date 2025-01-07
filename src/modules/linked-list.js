@@ -2,6 +2,16 @@ import { Node } from "./node.js";
 
 const log = console.log;
 
+//WHAT COULD BE DONE BETTER:
+//Make functions able to take a callback function as an arg
+//  so when searching, for example, you can put in a function
+//  that returns true for the desired target, and that target
+//  is returned. This would help in cases such as the hash map,
+//  where we had to use node.value.key or node.value.value and could
+//  not use the built in linked list functions, since the values 
+//  of the node were of the form { key: x, value: y }, and so were
+//  incompatible with the functions defined here.
+
 export function LinkedList() {
     
     let head = null;
@@ -26,7 +36,16 @@ export function LinkedList() {
             return head;
         },
         get tail() {
-            return getTail();
+            if (!head) {
+                return null;
+            }
+    
+            let currentNode = head;
+            while (currentNode.next) {
+                currentNode = currentNode.next;
+            }
+    
+            return currentNode;
         },
         get size() {
             return size;
